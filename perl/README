@@ -1,0 +1,44 @@
+From Susan Miller:
+
+Reference1 is the 35kb sequence that has Haplotype I && II versions, and for that one samples 1070 & 1072 were mapped to the HapI version and samples 1036 & 1042 were mapped to the Hap II version.
+
+Reference 2 is the 87kb sequence and all 4 samples were mapped to it.
+
+
+From Bismark manual:
+
+The methylation extractor output looks like this (tab separated):
+(1) seq-ID
+(2) methylation state
+(3) chromosome
+(4) start position (= end position)
+(5) methylation call
+
+Methylation call:
+
+The methylation call string contains a dot ‘.’ for every position in the BS-read not involving a
+cytosine, or contains  one of  the following letters for the three different  cytosine  methylation 
+contexts (UPPER CASE = METHYLATED, lower case = unmethylated):
+
+z unmethylated C in CpG context
+Z methylated C in CpG context 
+x unmethylated C in CHG context
+X methylated C in CHG context
+h unmethylated C in CHH context
+H methylated C in CHH context
+
+
+#getting CG positions
+ ./perl/get_CG_positions.pl < sequences/HapI.faa > sequences/HapI_CG_pos.txt
+ ./perl/get_CG_positions.pl < sequences/HapII.faa > sequences/HapII_CG_pos.txt
+
+#Analyses run:
+   ./perl/remove_positions.pl -pf sequences/HapI_CG_pos.txt -df results/v1/CpG_1070.txt > results/v1/CpG_1070.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapI_CG_pos.txt -df results/v1/CpG_1072.txt > results/v1/CpG_1072.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapII_CG_pos.txt -df results/v1/CpG_1042.txt > results/v1/CpG_1042.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapII_CG_pos.txt -df results/v1/CpG_1036.txt > results/v1/CpG_1036.cleaned.txt
+
+   ./perl/remove_positions.pl -pf sequences/HapII_CG_pos.txt -df results/v2/CpG_1036.txt > results/v2/CpG_1036.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapII_CG_pos.txt -df results/v2/CpG_1042.txt > results/v2/CpG_1042.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapI_CG_pos.txt -df results/v2/CpG_1070.txt > results/v2/CpG_1070.cleaned.txt
+   ./perl/remove_positions.pl -pf sequences/HapI_CG_pos.txt -df results/v2/CpG_1072.txt > results/v2/CpG_1072.cleaned.txt
